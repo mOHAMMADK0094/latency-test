@@ -1,0 +1,13 @@
+services:
+  internalserver:
+    image: internalserver
+    build:
+      context: .
+      dockerfile: dockerfile.internal
+    ports:
+      - 8000:8000
+    environment:
+      #FIXME: this is docker's default ip address
+      REDIS_HOST: 172.17.0.1
+      NATS_HOST: 172.17.0.1
+      DB_HOST: 172.17.0.1

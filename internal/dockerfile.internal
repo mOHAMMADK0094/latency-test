@@ -1,0 +1,7 @@
+FROM python:3.12.4
+COPY *.py *.txt /app/
+WORKDIR /app
+RUN pip install -r requirements.txt && chown 1111:1111 -R /app
+EXPOSE 8000
+USER 1111:1111
+ENTRYPOINT ["python3", "internal.py"]

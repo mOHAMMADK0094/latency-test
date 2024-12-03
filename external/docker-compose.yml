@@ -1,0 +1,16 @@
+services:
+  externalserver:
+    image: externalserver
+    build:
+      context: .
+      dockerfile: dockerfile.external
+    volumes:
+      - externalvolume:/app/logs
+    ports:
+      - 8900:8900
+    environment:
+      #FIXME: this is docker's default ip address
+      TEST_HOST: 172.17.0.1
+
+volumes:
+  externalvolume:
