@@ -1,4 +1,4 @@
-FROM python:3.12.4
+FROM python:3.12.4-alpine3.19
 COPY *.py *.txt /app/
 WORKDIR /app
 RUN pip install -r requirements.txt && mkdir /app/logs && chown 1111:1111 -R /app

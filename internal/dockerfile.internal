@@ -1,7 +1,13 @@
-FROM python:3.12.4
-COPY *.py *.txt /app/
+FROM python:3.12.4-alpine3.19 AS build
+RUN apk --no-cache add build-base libpq libpq-dev
+COPY ./requirements.txt ./
+RUN pip3 install --no-cache-dir -r ./requirements.txt
+FROM python:3.12.4-alpine3.19 AS final
+COPY *.py /app/
+COPY --from=build /usr/local/lib/python3.12/site-packages/ /usr/local/lib/python3.12/site-packages/
 WORKDIR /app
-RUN pip install -r requirements.txt && chown 1111:1111 -R /app
+RUN apk --no-cache add libpq
+RUN chown 1111:1111 -R /app
 EXPOSE 8000
 USER 1111:1111
 ENTRYPOINT ["python3", "internal.py"]
